@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Su Carrito</title>
+    <link rel="stylesheet" href="css/Style.css">
+    <script>
+        // Obtener o inicializar el carrito desde el almacenamiento local
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Obtener los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
+        const productName = params.get("product");
+        const productPrice = parseFloat(params.get("price"));
+
+        // Agregar el producto al carrito si está presente en los parámetros
+        if (productName && !isNaN(productPrice)) {
+            cart.push({ name: productName, price: productPrice });
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Mostrar los productos del carrito
+        window.onload = function() {
+            const cartContainer = document.getElementById("cart-items");
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+
+                const itemElement = document.createElement("div");
+                itemElement.className = "cart-item";
+                itemElement.innerHTML = `
+                    <p><strong>Producto:</strong> ${item.name}</p>
+                    <p><strong>Precio:</strong> $${item.price.toFixed(2)}</p>
+                `;
+
+                // Botón para eliminar un producto del carrito
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Eliminar";
+                removeButton.onclick = function() {
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    location.reload(); // Recargar para actualizar la lista
+                };
+
+                itemElement.appendChild(removeButton);
+                cartContainer.appendChild(itemElement);
+            });
+
+            document.getElementById("cart-total").textContent = total.toFixed(2);
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo" aria-label="Tech Store">Tech Store</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="smartphones.html">Smartphones</a></li>
+                <li><a href="tablets.html">Tablets</a></li>
+                <li><a href="audio.html">Audio y Sonido</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="order-details">
+            <h2>Carrito</h2>
+            <div id="cart-items" class="order-summary">
+                <!-- Los productos se mostrarán aquí -->
+            </div>
+            <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
+            <a href="index.html" class="cta-btn">Volver a la tienda</a>
+            <a href="comprar.html" class="cta-btn">Comprar</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Store. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

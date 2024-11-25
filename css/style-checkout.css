@@ -1,0 +1,118 @@
+/* style-checkout.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    margin: 20px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.checkout, .invoice {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.checkout input, .checkout button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkout input[type="text"], .checkout input[type="email"], .checkout input[type="number"] {
+    border: 1px solid #ddd;
+}
+
+.checkout input[type="text"]:focus, .checkout input[type="email"]:focus, .checkout input[type="number"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 12px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Invoice Styles */
+.invoice h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.invoice p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Add a simple table for invoice details */
+.invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.invoice table th, .invoice table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.invoice table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    main {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .checkout, .invoice {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Compra</title>
+    <link rel="stylesheet" href="css/Style.css">
+    <script>
+        window.onload = function() {
+            // Obtener el carrito desde localStorage
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Verificar si el carrito está vacío
+            if (cart.length === 0) {
+                document.getElementById("order-details").innerHTML = `
+                    <h2>Tu carrito está vacío</h2>
+                    <a href="index.html" class="cta-btn">Volver a la tienda</a>
+                `;
+                return;
+            }
+
+            // Calcular el subtotal, IVA y total general
+            const ivaRate = 0.13; // Tasa de IVA (13%)
+            let subtotal = 0;
+
+            cart.forEach(product => {
+                subtotal += product.price;
+            });
+
+            const iva = subtotal * ivaRate;
+            const total = subtotal + iva;
+
+            // Mostrar los productos en la página
+            const productList = document.getElementById("product-list");
+            cart.forEach(product => {
+                const itemElement = document.createElement("div");
+                itemElement.className = "cart-item";
+                itemElement.innerHTML = `
+                    <p><strong>Producto:</strong> ${product.name}</p>
+                    <p><strong>Precio:</strong> $${product.price.toFixed(2)}</p>
+                `;
+                productList.appendChild(itemElement);
+            });
+
+            // Mostrar el resumen de costos
+            document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+            document.getElementById("iva").textContent = iva.toFixed(2);
+            document.getElementById("total").textContent = total.toFixed(2);
+
+            // Limpiar el carrito tras la compra
+            document.getElementById("confirm-purchase").onclick = function() {
+                localStorage.removeItem('cart');
+                alert("¡Gracias por tu compra!");
+                window.location.href = "index.html";
+            };
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo" aria-label="Tech Store">Tech Store</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="laptops.html">Laptops</a></li>
+                <li><a href="smartphones.html">Smartphones</a></li>
+                <li><a href="tablets.html">Tablets</a></li>
+                <li><a href="audio.html">Audio y Sonido</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="order-details">
+            <h2>Factura de la compra</h2>
+            <div id="product-list" class="order-summary">
+                <!-- Lista de productos se generará aquí dinámicamente -->
+            </div>
+            <div class="cost-summary">
+                <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+                <p><strong>IVA (13%):</strong> $<span id="iva">0.00</span></p>
+                <p><strong>Total:</strong> $<span id="total">0.00</span></p>
+            </div>
+            <button id="confirm-purchase" class="cta-btn">Confirmar compra</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Store. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
